@@ -6,7 +6,6 @@
 package com.example.laboratoire.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -32,7 +31,8 @@ public class Panel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+   
+    /******** Used to hold  testIds that will be created when posting  a panel **/
     @Transient
     List<Integer> testIds;
 
@@ -44,6 +44,7 @@ public class Panel {
         this.testIds = testIds;
         return this;
     }
+   /* *************/
     
     private String name;
     private String description;

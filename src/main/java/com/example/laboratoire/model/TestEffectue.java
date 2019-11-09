@@ -9,10 +9,8 @@ import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,8 +35,8 @@ public class TestEffectue {
     @MapsId("testId")
     private com.example.laboratoire.model.Test test;
     
-    @OneToOne(mappedBy = "testEffectue")
-    private Result result;
+//    @OneToOne(mappedBy = "testEffectue")
+//    private Result result;     This was transfered to Sample table since creating rows using one form was difficult
     
     @Column(name="created_on")
     @Temporal(TemporalType.TIMESTAMP)
@@ -90,14 +88,14 @@ public class TestEffectue {
         return this;
     }
 
-    public Result getResult() {
-        return result;
-    }
-
-    public TestEffectue setResult(Result result) {
-        this.result = result;
-        return this;
-    }
+//    public Result getResult() {
+//        return result;
+//    }
+//
+//    public TestEffectue setResult(Result result) {
+//        this.result = result;
+//        return this;
+//    }
 
     public Date getCreatedOn() {
         return createdOn;

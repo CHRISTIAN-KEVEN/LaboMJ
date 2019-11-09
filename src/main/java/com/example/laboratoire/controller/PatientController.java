@@ -62,10 +62,15 @@ public class PatientController {
        
    }
    
-   @RequestMapping(value="/patients/{id}", method = RequestMethod.PATCH)
-   public Patient update(@RequestBody Patient patient){
+   @RequestMapping(value="/patients/{id}", method = RequestMethod.PUT)
+   public Patient update(@RequestBody Patient patient, @PathVariable("sexId") int sexId, @PathVariable("sigleId") int sigleId){
        
-       return patientRepo.save((Patient)patient.setUpdatedOn(new Date()));
+       return patientRepo.save(
+              (Patient) patient.setStatutVie(true)
+                               .setSex(new Sexe(sexId))
+                               .setSigle(new Sigle(sigleId))
+                               .setUpdatedOn(new Date())
+       );
    }
    
 

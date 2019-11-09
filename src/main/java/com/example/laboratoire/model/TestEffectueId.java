@@ -26,7 +26,7 @@ public class TestEffectueId implements Serializable{
     public TestEffectueId() {
     }
 
-    public TestEffectueId(Long testId, Long sampleId) {
+    public TestEffectueId(Long sampleId, Long testId) {
         this.testId = testId;
         this.sampleId = sampleId;
     }

@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -41,14 +40,14 @@ import javax.persistence.TemporalType;
 public class Test {
  /* This is to hold */   
     @javax.persistence.Transient
-    private List<Integer> testIds ;
+    private List<Integer> panelIds ;
 
-    public List<Integer> getTestIds() {
-        return testIds;
+    public List<Integer> getPanelIds() {
+        return panelIds;
     }
 
-    public void setTestIds(List<Integer> testIds) {
-        this.testIds = testIds;
+    public void setPanelIds(List<Integer> testIds) {
+        this.panelIds = testIds;
     }
     
     @Id
@@ -96,6 +95,7 @@ public class Test {
 
     public Test(Long id){
         this.id = id;
+        this.testsEffectues = new ArrayList();
     }
     
     public Test(Long id, String name, String description, String unitOfMeasurement, long price, List<ValeurDeReference> valeurDereferences, List<SampleType> sampleTypes, Section section, Date createdOn, Date updatedOn, boolean statutVie, List<Panel> panels) {

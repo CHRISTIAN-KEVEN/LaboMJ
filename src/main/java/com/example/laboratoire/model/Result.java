@@ -30,7 +30,7 @@ public class Result {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name="valeur_numeric")
-    private int valeurNumeric;
+    private double valeurNumeric;
     @Column(name="valeur_caractere")
     private String valeurCaractere;
     private String notes;
@@ -39,12 +39,19 @@ public class Result {
     private boolean abnormal;
     private boolean rejected; // accepted or rejected
     private String inference; // Added by the Director
+    
     @ManyToOne
     private Employee validator;
     
-    @OneToOne
-    @JsonIgnore
-    private TestEffectue testEffectue;
+//    @OneToOne
+//    @JsonIgnore
+//    private TestEffectue testEffectue;  This was changed to sample cuz was difficult to see how to insert new
+    //                                      rows during one during one form submition since a form submition usually saves
+                                           //  only one Entity.
+    
+    @ManyToOne
+    private Sample sample;
+    
     @Column(name="created_on")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
@@ -65,9 +72,12 @@ public class Result {
     
     public Result(int id){
         this.id = id;
+        this.valeurCaractere = "";
+        this.valeurNumeric = 0.0;
+        
     }
 
-    public Result(int id, int valeur, String valeurCaractere, String notes, String attachedFile, boolean abnormal, boolean rejected, Employee validatedBy, TestEffectue testEffectue) {
+    public Result(int id, double valeur, String valeurCaractere, String notes, String attachedFile, boolean abnormal, boolean rejected, Employee validatedBy, Sample sample) {
         this.id = id;
         this.valeurNumeric = valeur;
         this.valeurCaractere = valeurCaractere;
@@ -76,7 +86,7 @@ public class Result {
         this.abnormal = abnormal;
         this.rejected = rejected;
         this.validator = validatedBy;
-        this.testEffectue = testEffectue;
+        this.sample = sample;
     }
 
 
@@ -89,11 +99,11 @@ public class Result {
         return this;
     }
 
-    public int getValeurNumeric() {
+    public double getValeurNumeric() {
         return valeurNumeric;
     }
 
-    public Result setValeurNumeric(int value) {
+    public Result setValeurNumeric(double value) {
         this.valeurNumeric = value;
         return this;
     }
@@ -133,12 +143,12 @@ public class Result {
         return this;
     }
 
-    public TestEffectue getTestEffectue() {
-        return testEffectue;
+    public Sample getSample() {
+        return this.sample;
     }
 
-    public Result setTestEffectue(TestEffectue testEffectue) {
-        this.testEffectue = testEffectue;
+    public Result setSample(Sample s) {
+        this.sample = s;
         return this;
     }
 

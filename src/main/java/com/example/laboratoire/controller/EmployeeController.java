@@ -61,11 +61,13 @@ public class EmployeeController {
       );
    }
    
-   @RequestMapping(value="/employees/{id}", method = RequestMethod.PATCH)
-   public Employee update(@RequestBody Employee employee){
+   @RequestMapping(value="{sexId}/{sigleId}/employees/{id}", method = RequestMethod.PATCH)
+   public Employee update(@RequestBody Employee emp, @PathVariable("sexId") int sexId, @PathVariable("sigleId") int sigleId){
        
-       return employeeRepo.save(
-               (Employee)employee.setUpdatedOn(new Date())
+            return employeeRepo.save(
+              (Employee) emp.setSex(new Sexe(sexId))
+                               .setSigle(new Sigle(sigleId))
+                               .setUpdatedOn(new Date())
        );
    }
    

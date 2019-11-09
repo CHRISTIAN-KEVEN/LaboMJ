@@ -7,12 +7,16 @@ package com.example.laboratoire.controller;
 
 import com.example.laboratoire.model.Patient;
 import com.example.laboratoire.model.Sample;
+import com.example.laboratoire.model.SampleType;
+import com.example.laboratoire.model.Test;
 import com.example.laboratoire.model.TestEffectue;
+import com.example.laboratoire.repository.PatientRepository;
 import com.example.laboratoire.repository.SampleRepository;
+import com.example.laboratoire.repository.SampleTypeRepository;
+import com.example.laboratoire.repository.TestRepository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +34,12 @@ public class SampleController {
     
     @Autowired
     SampleRepository sampleRepo;
+    @Autowired
+    TestRepository testRepo;
+    @Autowired
+    SampleTypeRepository stRepo;
+    @Autowired
+    PatientRepository patientRepo;
     
    @RequestMapping("/samples")
    public List<Sample> index(){
@@ -70,9 +80,18 @@ public class SampleController {
    @RequestMapping(value="patients/{patientId}/samples", method = RequestMethod.POST)
    public Sample store(@RequestBody Sample pan, @PathVariable("patientId") int patientId){
        
+       List<Long> testIds = pan.getTestIds();
+       
+       testRepo.findAllById(testIds).forEach(pan::addTest);
+       
+//       for(Long t: testIds){
+//           pan.addTest(new Test(t));
+//       }         
        return sampleRepo.save(
+               
                pan.setStatutVie(true)
-                       .setPatient(new Patient(patientId))
+                  .setSampleType(stRepo.findById(pan.getSampleTypeId()).get())
+                  .setPatient(patientRepo.findById(patientId).get())
                   .setCreatedOn(new Date())
                   .setUpdatedOn(new Date())
        );
